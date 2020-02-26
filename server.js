@@ -15,7 +15,7 @@ const Pool = require('pg').Pool
 const db = new Pool({ // criando um novo obj e colocando no db 
     user: 'postgres',
     password: 'netza1234',
-    host: '172.17.0.5',
+    host: '172.17.0.3',
     port: 5432,
     database: 'doe'
 })
@@ -31,7 +31,8 @@ nunjucks.configure("./", {
 // config o layout
 server.get("/", function (req, res) {
 
-    db.query("SELECT * FROM donors", function (err, result) {
+    db.query("SELECT name, blood, email FROM donors order by  name desc limit 4", function (err, result) {
+        // select name, blood, email from donors  order by data desc limit 8
         if (err)
             return res.send("erro de banco de dados!!!!")
 
@@ -77,5 +78,3 @@ let port = 9999
 server.listen(port, function () {
     console.log(`run port: ${port}`)
 })
-
-// teste01
